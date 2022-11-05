@@ -13,7 +13,7 @@ import javax.transaction.Transactional;
 @Transactional
 @RequiredArgsConstructor
 @Slf4j
-public class RoleServiceImpl implements RoleService{
+public class RoleServiceImpl implements RoleService {
     @Autowired
     private final RoleRepository roleRepository;
 

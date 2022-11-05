@@ -20,26 +20,28 @@ import java.util.List;
 public class UserController {
     @Autowired
     private final UserService userService;
+
     @GetMapping
-    public ResponseEntity<List<UserEntity>> findAll(){
+    public ResponseEntity<List<UserEntity>> findAll() {
         return ResponseEntity.ok().body(userService.findAll());
     }
+
     @GetMapping("/{username}")
-    public ResponseEntity<UserEntity> findByUsername(@PathVariable String username){
+    public ResponseEntity<UserEntity> findByUsername(@PathVariable String username) {
         return ResponseEntity.ok().body(userService.findByUsername(username));
     }
 
     @PostMapping
-    public ResponseEntity<UserEntity> save(@RequestBody UserEntity user){
+    public ResponseEntity<UserEntity> save(@RequestBody UserEntity user) {
         UserEntity userEntity = userService.save(user);
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentRequest()
                 .buildAndExpand(userEntity.getUsername()).toUriString());
         return ResponseEntity.created(uri).build();
     }
 
-    @PostMapping
-    public ResponseEntity<?> addRoleToUser(@PathVariable String username, @RequestBody RoleDto role){
-        UserEntity userEntity = userService.addRoleToUser(username,role.getRoleName());
+    @PostMapping("/{username}/addRoleToUser")
+    public ResponseEntity<?> addRoleToUser(@PathVariable String username, @RequestBody RoleDto role) {
+        UserEntity userEntity = userService.addRoleToUser(username, role.getRoleName());
         return ResponseEntity.ok(userEntity);
     }
 }
